@@ -32,14 +32,14 @@ The Metayb Employee Registration System is a full-stack application designed to 
 2. **Set up the Backend**
     cd server
     npm install
-    # Set up your PostgreSQL database and note the credentials & update them accordingly in dbConnect.js file.
+    Set up your PostgreSQL database and note the credentials & update them accordingly in dbConnect.js file.
     nodemon server.js
-    # The Node app will run on http://localhost:3001
+    The Node app will run on http://localhost:3001
 3. **Set up the Frontend**
     cd ../client
     npm install
     npm start
-    # The React app will run on http://localhost:3000
+    The React app will run on http://localhost:3000
 
 ### Configuration
 Ensure your database credentials are set in dbConnect.js file:
