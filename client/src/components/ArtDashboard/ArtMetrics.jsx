@@ -44,10 +44,10 @@ function ArtMetrics() {
 
   const processChartData = (data) => {
     const aggregatedData = data.reduce((acc, item) => {
-      const empKey = `Employee ${item.emp_id}`;
+      const empKey = item.emp_name;
       if (!acc[empKey]) {
         acc[empKey] = {
-          emp_id: empKey,
+          emp_name: empKey,
           total: 0,
           breakdown: {}
         };
@@ -59,7 +59,7 @@ function ArtMetrics() {
     }, {});
 
     const formattedData = Object.values(aggregatedData).map(item => ({
-      emp_id: item.emp_id,
+      emp_name: item.emp_name,
       total: item.total,
       ...item.breakdown
     }));
@@ -111,7 +111,7 @@ function ArtMetrics() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="emp_id" />
+                <XAxis dataKey="emp_name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />

@@ -31,15 +31,21 @@ router.get('/artMetrics', async (req, res) => {
   const { fromDate, toDate } = req.query;
   try {
     const query = `
-      SELECT art_id, emp_id, status, COUNT(*) as count
-      FROM art_sessions
-      WHERE start_time BETWEEN $1 AND $2
-      AND status IN ('COMPLETED', 'IN PROGRESS')
-      GROUP BY art_id, emp_id, status
-      ORDER BY count DESC, art_id, emp_id;
+      SELECT e.first_name, e.last_name, a.art_id, COUNT(*) as count
+      FROM art_sessions a
+      JOIN employees e ON a.emp_id = e.id
+      WHERE a.start_time BETWEEN $1 AND $2
+      AND a.status IN ('COMPLETED', 'IN PROGRESS')
+      GROUP BY e.first_name, e.last_name, a.art_id
+      ORDER BY count DESC, e.first_name, e.last_name;
     `;
     const result = await pool.query(query, [fromDate, toDate + ' 23:59:59']);
-    res.json(result.rows);
+    const formattedResult = result.rows.map(row => ({
+      emp_name: `${row.first_name} ${row.last_name}`,
+      art_id: `ART ${row.art_id}`,
+      count: row.count
+    }));
+    res.json(formattedResult);
   } catch (error) {
     console.error('Error fetching ART metrics:', error);
     res.status(500).json({ message: "Failed to fetch ART metrics." });

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+
 const adminRoutes = require('./routes/adminRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 const registrationRequestsRoutes = require('./routes/registrationRequests');
@@ -10,8 +11,6 @@ const employeeARTRoutes = require('./routes/employeeARTRoutes');
 const PORT = process.env.PORT || 3001;
 
 const { createEmployeeTable } = require('./db/models/Employee');
-const { createArtProjectTable } = require('./db/models/ArtProject');
-const { createEmployeeProjectTable } = require('./db/models/EmployeeProject');
 const { createAdminTable } = require('./db/models/Admin');
 const { createPendingEmployeeTable } = require('./db/models/PendingEmployee');
 const { createArtTimeSettingsTable } = require('./db/models/ArtTimeSettings');
@@ -19,8 +18,6 @@ const { createArtSessionsTable } = require('./db/models/ArtSessions');
 
 async function initializeDatabase() {
   await createEmployeeTable();
-  await createArtProjectTable();
-  await createEmployeeProjectTable();
   await createAdminTable();
   await createPendingEmployeeTable();
   await createArtTimeSettingsTable();
